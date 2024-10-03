@@ -1,0 +1,20 @@
+service : {
+    "greet": (text) -> (text) query;
+    "create_user": (text, text) -> ();
+    //dfx canister call <canister_name> create_user '( "<email>", "<password>" )'
+
+    "get_user": (text) -> (opt record { email: text; password: text });
+    //dfx canister call fortuneForest_backend get_user 'name@domain.tld'
+
+    "delete_user": (text) -> ();
+    //dfx canister call fortuneForest_backend delete_user 'name@domain.tld'
+
+    "get_all_users": () -> (vec record { email: text; password: text });
+    //dfx canister call fortuneForest_backend get_all_users '()'
+
+    "edit_user": (text, opt text, opt text) -> (opt record { email: text; password: text });
+    //Edit Only the Password = dfx canister call fortuneForest_backend edit_user '( "old@example.com", null, opt "newpassword" )'
+    //Edit Only the Email = dfx canister call fortuneForest_backend edit_user '( "old@example.com", opt "new@example.com", null )'
+    //Edit Both Email and Password = dfx canister call fortuneForest_backend edit_user '( "old@example.com", opt "new@example.com", opt "newpassword" )'
+
+};

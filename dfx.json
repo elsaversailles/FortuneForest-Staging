@@ -1,0 +1,27 @@
+{
+  "canisters": {
+    "fortuneForest_backend": {
+      "candid": "src/fortuneForest_backend/fortuneForest_backend.did",
+      "package": "fortuneForest_backend",
+      "type": "rust"
+    },
+    "fortuneForest_frontend": {
+      "dependencies": [
+        "fortuneForest_backend"
+      ],
+      "source": [
+        "src/fortuneForest_frontend/dist"
+      ],
+      "type": "assets",
+      "workspace": "fortuneForest_frontend"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}

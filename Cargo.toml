@@ -1,0 +1,5 @@
+[workspace]
+members = [
+    "src/fortuneForest_backend"
+]
+resolver = "2"
