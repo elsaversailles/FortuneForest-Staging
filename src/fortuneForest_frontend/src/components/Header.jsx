@@ -8,7 +8,7 @@ const Header = () => {
     const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
     return (
-        <header className="bg-[#75b957] shadow-lg shadow-[#5a9042]/30">
+        <header className="fixed top-0 left-0 right-0 z-50 bg-[#75b957] shadow-lg shadow-[#5a9042]/30">
             <div className="container mx-auto px-6 py-4">
                 <div className="flex flex-col sm:flex-row justify-between items-center">
                     <div className="flex items-center mb-4 sm:mb-0">
