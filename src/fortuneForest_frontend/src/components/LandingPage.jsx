@@ -38,7 +38,7 @@ const LandingPage = () => {
                     backgroundRepeat: 'repeat-y',
                     backgroundSize: 'cover',
                     backgroundAttachment: 'fixed',
-                    opacity: 0.5,
+                    opacity: 0.7,
                     transform: `translateY(${y1}px)`,
                 }}
             ></motion.div>
@@ -191,6 +191,16 @@ const LandingPage = () => {
                                     />
                                 </div>
                             )}
+                            {isMobile && (
+                                <div className="absolute top-0 bottom-0 left-1/2 w-1 bg-green-500 transform -translate-x-1/2 z-0">
+                                    <motion.div
+                                        className="w-full bg-green-700"
+                                        initial={{ height: 0 }}
+                                        animate={whyForestInView ? { height: '100%' } : { height: 0 }}
+                                        transition={{ delay: 0.2, duration: 1.5, ease: "easeInOut" }}
+                                    />
+                                </div>
+                            )}
                             {['sdg-15.png', 'ICP-logo.png', 'fortuneforest.png'].map((img, index) => (
                                 <motion.div
                                     key={index}
@@ -199,14 +209,17 @@ const LandingPage = () => {
                                     animate={whyForestInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                                     transition={{ delay: 0.4 + index * 0.2, duration: 0.8, ease: "easeOut" }}
                                 >
-                                    <img src={img} alt={`Fortune Forest Initiative ${index + 1}`} className={`${isMobile ? 'w-24 h-24' : 'w-32 h-32'} object-contain mx-auto mb-4`} />
+                                    <img
+                                        src={img}
+                                        alt={`Fortune Forest Initiative ${index + 1}`}
+                                        className={`w-32 h-32 object-contain mx-auto mb-4 ${img === 'sdg-15.png' ? 'rounded-full' : ''}`}
+                                    />
                                 </motion.div>
                             ))}
                         </div>
 
                         <motion.p
-                            className={`${isMobile ? 'text-base' : 'text-lg'}
-                            text-green-700`}
+                            className={`${isMobile ? 'text-base' : 'text-lg'} text-green-700`}
                             initial={{ opacity: 0, y: 20 }}
                             animate={whyForestInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                             transition={{ delay: 1, duration: 0.8, ease: "easeOut" }}
