@@ -22,29 +22,29 @@ const RegisterModal = ({ isOpen, onClose }) => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-
+  
     if (!validateEmail(email)) {
       toast.error("Please enter a valid email address");
       return;
     }
-
+  
     if (!validatePassword(password)) {
       toast.error("Password must be at least 8 characters long and include uppercase, lowercase, number, and special character");
       return;
     }
-
+  
     if (password !== confirmPassword) {
       toast.error("Passwords don't match");
       return;
     }
-
+  
     try {
       const result = await fortuneForest_backend.create_user(email, password);
-      if (result.Ok) {
-        toast.success("Registration Successful!");
+      if (result) {
+        toast.success("Registration successful! Welcome to FortuneForest.");
         onClose();
       } else {
-        toast.error(result.Err);
+        toast.error("User with this email already exists");
       }
     } catch (error) {
       console.error('Registration error:', error);

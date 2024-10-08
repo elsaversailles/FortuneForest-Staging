@@ -11,12 +11,8 @@ const LoginModal = ({ isOpen, onClose, onLoginSuccess }) => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-<<<<<<< HEAD
       // Call the get_user method to fetch user data
       const user = await fortuneForest_backend.verify_user_login_credentials(email);
-=======
-      const user = await fortuneForest_backend.get_user(email);
->>>>>>> 7434a31459a576ceff68250ee93435beaa40ae30
       
       if (user && user.password === password) {
         toast.success("Login Successful!");
