@@ -4,9 +4,9 @@ import RegisterModal from './auth/RegisterModal';
 import LoginModal from './auth/LoginModal';
 import { useMediaQuery } from 'react-responsive';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiMenu, FiX } from 'react-icons/fi';
+import { FiMenu, FiX, FiUser } from 'react-icons/fi';
 
-const Header = () => {
+const Header = ({ isAuthenticated = false }) => {
     const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
     const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -35,12 +35,24 @@ const Header = () => {
                         </Button>
                     ) : (
                         <nav className="flex items-center space-x-4">
-                            <Button variant="secondary" className="bg-white text-[#75b957] hover:bg-opacity-90 transition-all duration-300 shadow-md" onClick={() => setIsLoginModalOpen(true)}>
-                                Sign in
-                            </Button>
-                            <Button variant="outline" className="border-white text-white hover:bg-white hover:text-[#75b957] transition-all duration-300 shadow-md" onClick={() => setIsRegisterModalOpen(true)}>
-                                Sign Up
-                            </Button>
+                            {isAuthenticated ? (
+                                <>
+                                    <Button variant="ghost" className="text-white">Dashboard</Button>
+                                    <Button variant="ghost" className="text-white">Profile</Button>
+                                    <Button variant="secondary" className="bg-white text-[#75b957] hover:bg-opacity-90 transition-all duration-300 shadow-md">
+                                        <FiUser className="mr-2" /> Account
+                                    </Button>
+                                </>
+                            ) : (
+                                <>
+                                    <Button variant="secondary" className="bg-white text-[#75b957] hover:bg-opacity-90 transition-all duration-300 shadow-md" onClick={() => setIsLoginModalOpen(true)}>
+                                        Sign in
+                                    </Button>
+                                    <Button variant="outline" className="border-white text-white hover:bg-white hover:text-[#75b957] transition-all duration-300 shadow-md" onClick={() => setIsRegisterModalOpen(true)}>
+                                        Sign Up
+                                    </Button>
+                                </>
+                            )}
                         </nav>
                     )}
                 </div>
@@ -65,22 +77,38 @@ const Header = () => {
                                 <FiX size={24} />
                             </Button>
                             <div className="space-y-6">
-                                <Button
-                                    fullWidth
-                                    variant="secondary"
-                                    className="bg-white text-[#75b957] hover:bg-opacity-90 transition-all duration-300 shadow-md py-3 text-lg font-semibold"
-                                    onClick={() => { setIsLoginModalOpen(true); toggleDrawer(); }}
-                                >
-                                    Sign in
-                                </Button>
-                                <Button
-                                    fullWidth
-                                    variant="outline"
-                                    className="border-2 border-white text-white hover:bg-white hover:text-[#75b957] transition-all duration-300 shadow-md py-3 text-lg font-semibold"
-                                    onClick={() => { setIsRegisterModalOpen(true); toggleDrawer(); }}
-                                >
-                                    Sign Up
-                                </Button>
+                                {isAuthenticated ? (
+                                    <>
+                                        <Button fullWidth variant="ghost" className="text-white hover:bg-green-600 transition-colors py-3 text-lg font-semibold">
+                                            Dashboard
+                                        </Button>
+                                        <Button fullWidth variant="ghost" className="text-white hover:bg-green-600 transition-colors py-3 text-lg font-semibold">
+                                            Profile
+                                        </Button>
+                                        <Button fullWidth variant="secondary" className="bg-white text-[#75b957] hover:bg-opacity-90 transition-all duration-300 shadow-md py-3 text-lg font-semibold">
+                                            <FiUser className="mr-2" /> Account
+                                        </Button>
+                                    </>
+                                ) : (
+                                    <>
+                                        <Button
+                                            fullWidth
+                                            variant="secondary"
+                                            className="bg-white text-[#75b957] hover:bg-opacity-90 transition-all duration-300 shadow-md py-3 text-lg font-semibold"
+                                            onClick={() => { setIsLoginModalOpen(true); toggleDrawer(); }}
+                                        >
+                                            Sign in
+                                        </Button>
+                                        <Button
+                                            fullWidth
+                                            variant="outline"
+                                            className="border-2 border-white text-white hover:bg-white hover:text-[#75b957] transition-all duration-300 shadow-md py-3 text-lg font-semibold"
+                                            onClick={() => { setIsRegisterModalOpen(true); toggleDrawer(); }}
+                                        >
+                                            Sign Up
+                                        </Button>
+                                    </>
+                                )}
                             </div>
                         </div>
                     </motion.div>
