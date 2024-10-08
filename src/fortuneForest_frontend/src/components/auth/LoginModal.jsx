@@ -10,7 +10,7 @@ const LoginModal = ({ isOpen, onClose }) => {
     e.preventDefault();
     try {
       // Call the get_user method to fetch user data
-      const user = await fortuneForest_backend.get_user(email);
+      const user = await fortuneForest_backend.verify_user_login_credentials(email);
       
       if (user && user.password === password) {
         // Simulate a successful login

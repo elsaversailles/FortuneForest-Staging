@@ -1,20 +1,29 @@
 service : {
-    "greet": (text) -> (text) query;
-    "create_user": (text, text) -> ();
-    //dfx canister call <canister_name> create_user '( "<email>", "<password>" )'
+    "create_user": (text, text) -> (opt text);
+    //dfx canister call fortuneForest_backend create_user '( "name@domain.tld", "password" )'
 
-    "get_user": (text) -> (opt record { email: text; password: text });
-    //dfx canister call fortuneForest_backend get_user 'name@domain.tld'
+    "verify_user_login_credentials": (text, text) -> (opt text);
+    //for login
+    //dfx canister call fortuneForest_backend verify_user_login_credentials '("name@domain.tld", "password")'
 
-    "delete_user": (text) -> ();
-    //dfx canister call fortuneForest_backend delete_user 'name@domain.tld'
+    "get_user_by_id": (text) -> (opt text);
+    //dfx canister call fortuneForest_backend get_user_by_id '("user_1")'
 
-    "get_all_users": () -> (vec record { email: text; password: text });
+    "get_user_details": (text, text) -> (opt text);
+    //dfx canister call fortuneForest_backend get_user_details '("user_1", "age")'
+
+    "get_all_users": () -> (vec text);
     //dfx canister call fortuneForest_backend get_all_users '()'
 
-    "edit_user": (text, opt text, opt text) -> (opt record { email: text; password: text });
-    //Edit Only the Password = dfx canister call fortuneForest_backend edit_user '( "old@example.com", null, opt "newpassword" )'
-    //Edit Only the Email = dfx canister call fortuneForest_backend edit_user '( "old@example.com", opt "new@example.com", null )'
-    //Edit Both Email and Password = dfx canister call fortuneForest_backend edit_user '( "old@example.com", opt "new@example.com", opt "newpassword" )'
+    "edit_user": (text, vec record { field_name: text; field_value: text }) -> (opt text);
+    //dfx canister call fortuneForest_backend edit_user '("name@domain.tld", vec { record { "field_name" = "password"; "field_value" = "newpassword" } })'
 
+    "delete_user": (text) -> (opt text);
+    //dfx canister call fortuneForest_backend delete_user '("user_1")'
+
+    "save_users_to_stable_storage": () -> ();
+    //dfx canister call fortuneForest_backend save_users_to_stable_storage '()'
+
+    "load_users_from_stable_storage": () -> ();
+    //dfx canister call fortuneForest_backend load_users_from_stable_storage '()'
 };
