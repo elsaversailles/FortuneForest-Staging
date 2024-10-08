@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { toast } from 'react-hot-toast';
+import { toast, Toaster } from 'react-hot-toast';
 import { fortuneForest_backend } from 'declarations/fortuneForest_backend'; // Adjust the import as necessary
 
 const LoginModal = ({ isOpen, onClose }) => {

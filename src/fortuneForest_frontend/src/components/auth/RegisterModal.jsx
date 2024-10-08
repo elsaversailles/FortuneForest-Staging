@@ -7,8 +7,29 @@ const RegisterModal = ({ isOpen, onClose }) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
+  const validateEmail = (email) => {
+    const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return re.test(String(email).toLowerCase());
+  };
+
+  const validatePassword = (password) => {
+    const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return re.test(password);
+  };
+
   const handleRegister = async (e) => {
     e.preventDefault();
+
+    if (!validateEmail(email)) {
+      toast.error("Please enter a valid email address");
+      return;
+    }
+
+    if (!validatePassword(password)) {
+      toast.error("Password must be at least 8 characters long and include uppercase, lowercase, number, and special character");
+      return;
+    }
+
     if (password !== confirmPassword) {
       toast.error("Passwords don't match");
       return;
@@ -60,6 +81,9 @@ const RegisterModal = ({ isOpen, onClose }) => {
               className="mt-1 block w-full px-3 py-2 bg-white border border-[#75b957] rounded-md shadow-sm focus:outline-none focus:ring-[#75b957] focus:border-[#75b957]"
               required
             />
+            <p className="text-xs text-gray-500 mt-1">
+              Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.
+            </p>
           </div>
           <div>
             <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">Confirm Password</label>
