@@ -1,23 +1,23 @@
 import React, { useState } from 'react';
-import { toast, Toaster } from 'react-hot-toast';
-import { fortuneForest_backend } from 'declarations/fortuneForest_backend'; // Adjust the import as necessary
+import { toast } from 'react-hot-toast';
+import { fortuneForest_backend } from 'declarations/fortuneForest_backend';
+import { FiEye, FiEyeOff } from 'react-icons/fi';
 
-const LoginModal = ({ isOpen, onClose }) => {
+const LoginModal = ({ isOpen, onClose, onLoginSuccess }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      // Call the get_user method to fetch user data
       const user = await fortuneForest_backend.get_user(email);
       
       if (user && user.password === password) {
-        // Simulate a successful login
         toast.success("Login Successful!");
+        onLoginSuccess(user);
         onClose();
       } else {
-        // Notify user of incorrect credentials
         toast.error("Invalid email or password");
       }
     } catch (error) {
@@ -25,6 +25,8 @@ const LoginModal = ({ isOpen, onClose }) => {
       toast.error("An error occurred during login");
     }
   };
+
+  const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
   if (!isOpen) return null;
 
@@ -53,14 +55,23 @@ const LoginModal = ({ isOpen, onClose }) => {
           </div>
           <div>
             <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 block w-full px-3 py-2 bg-white border border-[#75b957] rounded-md shadow-sm focus:outline-none focus:ring-[#75b957] focus:border-[#75b957]"
-              required
-            />
+            <div className="relative mt-1">
+              <input
+                type={showPassword ? "text" : "password"}
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="block w-full px-3 py-2 bg-white border border-[#75b957] rounded-md shadow-sm focus:outline-none focus:ring-[#75b957] focus:border-[#75b957] pr-10"
+                required
+              />
+              <button
+                type="button"
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
+                onClick={togglePasswordVisibility}
+              >
+                {showPassword ? <FiEyeOff className="h-5 w-5 text-gray-500" /> : <FiEye className="h-5 w-5 text-gray-500" />}
+              </button>
+            </div>
           </div>
           <div className="flex justify-end space-x-2">
             <button
