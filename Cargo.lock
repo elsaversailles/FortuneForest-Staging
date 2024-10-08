@@ -167,6 +167,10 @@ dependencies = [
  "ic-cdk-timers",
  "serde",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+ "serde_json",
+>>>>>>> Stashed changes
 =======
  "serde_json",
 >>>>>>> Stashed changes
