@@ -233,7 +233,15 @@ const LandingPage = () => {
                         </section>
                     </main>
                     <RegisterModal isOpen={isRegisterModalOpen} onClose={() => setIsRegisterModalOpen(false)} />
-                    <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
+                    <LoginModal
+                        isOpen={isLoginModalOpen}
+                        onClose={() => setIsLoginModalOpen(false)}
+                        onLoginSuccess={(userData) => {
+                            // Handle successful login
+                            setUser(userData);
+                            setIsAuthenticated(true);
+                        }}
+                    />
                 </div>
             </GuestLayout>
         </>

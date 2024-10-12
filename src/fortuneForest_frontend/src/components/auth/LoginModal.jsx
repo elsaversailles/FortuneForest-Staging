@@ -11,18 +11,18 @@ const LoginModal = ({ isOpen, onClose, onLoginSuccess }) => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      // Call the get_user method to fetch user data
-      const user = await fortuneForest_backend.verify_user_login_credentials(email);
-      
-      if (user && user.password === password) {
+      const user = await fortuneForest_backend.verify_user_login_credentials(email, password);
+      if (user) {
         toast.success("Login Successful!");
-        onLoginSuccess(user);
+        if (typeof onLoginSuccess === 'function') {
+          onLoginSuccess(user);
+        }
         onClose();
       } else {
         toast.error("Invalid email or password");
       }
     } catch (error) {
-      console.error('Login error:', error);
+      console.error("Login error:", error);
       toast.error("An error occurred during login");
     }
   };
