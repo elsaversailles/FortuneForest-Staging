@@ -2,28 +2,55 @@ import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { fortuneForest_backend } from 'declarations/fortuneForest_backend';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
+import { FaSpinner } from 'react-icons/fa';
 
 const LoginModal = ({ isOpen, onClose, onLoginSuccess }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
-      const user = await fortuneForest_backend.verify_user_login_credentials(email, password);
-      if (user) {
-        toast.success("Login Successful!");
+      const result = await fortuneForest_backend.verify_user_login_credentials(email, password);
+      if (result.length > 0) {
+        const user = JSON.parse(result[0]);
+        toast.success("Login Successful!", {
+          icon: '🌳',
+          style: {
+            borderRadius: '10px',
+            background: '#333',
+            color: '#fff',
+          },
+        });
         if (typeof onLoginSuccess === 'function') {
           onLoginSuccess(user);
         }
         onClose();
       } else {
-        toast.error("Invalid email or password");
+        toast.error("Invalid email or password", {
+          icon: '❌',
+          style: {
+            borderRadius: '10px',
+            background: '#333',
+            color: '#fff',
+          },
+        });
       }
     } catch (error) {
       console.error("Login error:", error);
-      toast.error("An error occurred during login");
+      toast.error("An error occurred during login", {
+        icon: '⚠️',
+        style: {
+          borderRadius: '10px',
+          background: '#333',
+          color: '#fff',
+        },
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -79,14 +106,19 @@ const LoginModal = ({ isOpen, onClose, onLoginSuccess }) => {
               type="button"
               onClick={onClose}
               className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#75b957]"
+              disabled={isLoading}
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#75b957] hover:bg-[#5a9042] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#75b957]"
+              className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#75b957] hover:bg-[#5a9042] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#75b957] flex items-center justify-center"
+              disabled={isLoading}
             >
-              Login
+              {isLoading ? (
+                <FaSpinner className="animate-spin mr-2" />
+              ) : null}
+              {isLoading ? 'Logging in...' : 'Login'}
             </button>
           </div>
         </form>

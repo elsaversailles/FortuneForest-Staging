@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { fortuneForest_backend } from 'declarations/fortuneForest_backend';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
+import { FaSpinner } from 'react-icons/fa';
 
 const RegisterModal = ({ isOpen, onClose }) => {
   const [email, setEmail] = useState('');
@@ -9,6 +10,7 @@ const RegisterModal = ({ isOpen, onClose }) => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const validateEmail = (email) => {
     const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -22,33 +24,81 @@ const RegisterModal = ({ isOpen, onClose }) => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-  
+    setIsLoading(true);
+
     if (!validateEmail(email)) {
-      toast.error("Please enter a valid email address");
+      toast.error("Please enter a valid email address", {
+        icon: '❌',
+        style: {
+          borderRadius: '10px',
+          background: '#333',
+          color: '#fff',
+        },
+      });
+      setIsLoading(false);
       return;
     }
-  
+
     if (!validatePassword(password)) {
-      toast.error("Password must be at least 8 characters long and include uppercase, lowercase, number, and special character");
+      toast.error("Password must be at least 8 characters long and include uppercase, lowercase, number, and special character", {
+        icon: '❌',
+        style: {
+          borderRadius: '10px',
+          background: '#333',
+          color: '#fff',
+        },
+      });
+      setIsLoading(false);
       return;
     }
-  
+
     if (password !== confirmPassword) {
-      toast.error("Passwords don't match");
+      toast.error("Passwords don't match", {
+        icon: '❌',
+        style: {
+          borderRadius: '10px',
+          background: '#333',
+          color: '#fff',
+        },
+      });
+      setIsLoading(false);
       return;
     }
-  
+
     try {
       const result = await fortuneForest_backend.create_user(email, password);
       if (result) {
-        toast.success("Registration successful! Welcome to FortuneForest.");
+        toast.success("Registration successful! Welcome to FortuneForest.", {
+          icon: '🌳',
+          style: {
+            borderRadius: '10px',
+            background: '#333',
+            color: '#fff',
+          },
+        });
         onClose();
       } else {
-        toast.error("User with this email already exists");
+        toast.error("User with this email already exists", {
+          icon: '❌',
+          style: {
+            borderRadius: '10px',
+            background: '#333',
+            color: '#fff',
+          },
+        });
       }
     } catch (error) {
       console.error('Registration error:', error);
-      toast.error("An error occurred during registration");
+      toast.error("An error occurred during registration", {
+        icon: '⚠️',
+        style: {
+          borderRadius: '10px',
+          background: '#333',
+          color: '#fff',
+        },
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -130,14 +180,19 @@ const RegisterModal = ({ isOpen, onClose }) => {
               type="button"
               onClick={onClose}
               className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#75b957]"
+              disabled={isLoading}
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#75b957] hover:bg-[#5a9042] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#75b957]"
+              className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#75b957] hover:bg-[#5a9042] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#75b957] flex items-center justify-center"
+              disabled={isLoading}
             >
-              Register
+              {isLoading ? (
+                <FaSpinner className="animate-spin mr-2" />
+              ) : null}
+              {isLoading ? 'Registering...' : 'Register'}
             </button>
           </div>
         </form>

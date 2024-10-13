@@ -7,7 +7,7 @@ const Footer = () => {
     const isTabletOrDesktop = useMediaQuery({ minWidth: 768 });
 
     return (
-        <footer className="bg-[#75b957] text-white py-12">
+        <footer className="bg-green-600 text-white py-12">
             <div className="container mx-auto px-4">
                 <div className={`grid ${isTabletOrDesktop ? 'grid-cols-3' : 'grid-cols-1'} gap-8`}>
                     <motion.div

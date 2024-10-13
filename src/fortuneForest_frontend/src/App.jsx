@@ -13,7 +13,6 @@ function App() {
   const handleLoginSuccess = (userData) => {
     setIsAuthenticated(true);
     setUser(userData);
-    // Force a re-render
     window.location.hash = '/dashboard';
   };
 

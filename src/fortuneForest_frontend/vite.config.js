@@ -7,6 +7,7 @@ import dotenv from 'dotenv';
 dotenv.config({ path: '../../.env' });
 
 export default defineConfig({
+  base: './',
   build: {
     emptyOutDir: true,
     chunkSizeWarningLimit: 1000, // Set to 1000 kB for some large chunks

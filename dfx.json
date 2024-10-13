@@ -13,7 +13,15 @@
         "src/fortuneForest_frontend/dist"
       ],
       "type": "assets",
-      "workspace": "fortuneForest_frontend"
+      "workspace": "fortuneForest_frontend",
+      "rewrites": {
+        "rules": [
+          {
+            "match": "**",
+            "rewrite": "/index.html"
+          }
+        ]
+      }
     }
   },
   "defaults": {

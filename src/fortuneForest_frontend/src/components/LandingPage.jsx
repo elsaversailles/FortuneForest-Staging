@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, useViewportScroll, useTransform } from 'framer-motion';
+import { motion, useViewportScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { Button } from "./ui/button";
 import { useInView } from 'react-intersection-observer';
 import RegisterModal from './auth/RegisterModal';
@@ -232,16 +232,38 @@ const LandingPage = () => {
                             </motion.div>
                         </section>
                     </main>
-                    <RegisterModal isOpen={isRegisterModalOpen} onClose={() => setIsRegisterModalOpen(false)} />
-                    <LoginModal
-                        isOpen={isLoginModalOpen}
-                        onClose={() => setIsLoginModalOpen(false)}
-                        onLoginSuccess={(userData) => {
-                            // Handle successful login
-                            setUser(userData);
-                            setIsAuthenticated(true);
-                        }}
-                    />
+                    <AnimatePresence>
+                        {isRegisterModalOpen && (
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.9 }}
+                                transition={{ duration: 0.3 }}
+                            >
+                                <RegisterModal isOpen={isRegisterModalOpen} onClose={() => setIsRegisterModalOpen(false)} />
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+
+                    <AnimatePresence>
+                        {isLoginModalOpen && (
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.9 }}
+                                transition={{ duration: 0.3 }}
+                            >
+                                <LoginModal
+                                    isOpen={isLoginModalOpen}
+                                    onClose={() => setIsLoginModalOpen(false)}
+                                    onLoginSuccess={(userData) => {
+                                        setUser(userData);
+                                        setIsAuthenticated(true);
+                                    }}
+                                />
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
                 </div>
             </GuestLayout>
         </>
