@@ -3,12 +3,14 @@ import { toast } from 'react-hot-toast';
 import { fortuneForest_backend } from 'declarations/fortuneForest_backend';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 import { FaSpinner } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom' //this
 
 const LoginModal = ({ isOpen, onClose, onLoginSuccess }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -28,6 +30,7 @@ const LoginModal = ({ isOpen, onClose, onLoginSuccess }) => {
         if (typeof onLoginSuccess === 'function') {
           onLoginSuccess(user);
         }
+        navigate('/test'); //this
         onClose();
       } else {
         toast.error("Invalid email or password", {

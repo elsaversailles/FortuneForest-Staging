@@ -5,6 +5,7 @@ import { Toaster } from 'react-hot-toast';
 import LandingPage from './components/LandingPage';
 import Dashboard from './components/Dashboard';
 import Footer from './components/Footer';
+import Test from './components/Test'; //this
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -29,6 +30,7 @@ function App() {
             <Route path="/dashboard" element={
               isAuthenticated ? <Dashboard user={user} /> : <Navigate to="/" />
             } />
+            <Route path="/test" element={<Test />} /> {/* Add this route inside the Routes */}
           </Routes>
         </div>
         <Footer />
