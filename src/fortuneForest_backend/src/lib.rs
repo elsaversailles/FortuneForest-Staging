@@ -50,7 +50,7 @@ fn create_user(email: String, password: String) -> Option<String> {
 
         // Set tree_points and game_coins
         let tree_points = "0".to_string();
-        let game_coins = "0".to_string();
+        let life_coins = "100".to_string();
 
         // Create user fields
         let mut fields = HashMap::new();
@@ -58,7 +58,7 @@ fn create_user(email: String, password: String) -> Option<String> {
         fields.insert("password".to_string(), password);
         fields.insert("user_id".to_string(), user_id.clone());
         fields.insert("tree_points".to_string(), tree_points);
-        fields.insert("game_coins".to_string(), game_coins);
+        fields.insert("life_coins".to_string(), life_coins);
 
         let user = User { fields };
         users.insert(user_id.clone(), user);
