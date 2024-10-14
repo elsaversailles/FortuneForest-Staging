@@ -1,20 +1,28 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { HashRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Header from './components/Header';
 import { Toaster } from 'react-hot-toast';
 import LandingPage from './components/LandingPage';
 import Dashboard from './components/Dashboard';
 import Footer from './components/Footer';
-import Test from './components/Test'; //this
+import Test from './components/Test';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
 
+  useEffect(() => {
+    const sessionToken = localStorage.getItem('sessionToken');
+    const storedUser = localStorage.getItem('user');
+    if (sessionToken && storedUser) {
+      setIsAuthenticated(true);
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+
   const handleLoginSuccess = (userData) => {
     setIsAuthenticated(true);
     setUser(userData);
-    window.location.hash = '/dashboard';
   };
 
   return (
@@ -30,7 +38,7 @@ function App() {
             <Route path="/dashboard" element={
               isAuthenticated ? <Dashboard user={user} /> : <Navigate to="/" />
             } />
-            <Route path="/test" element={<Test />} /> {/* Add this route inside the Routes */}
+            <Route path="/test" element={<Test />} />
           </Routes>
         </div>
         <Footer />

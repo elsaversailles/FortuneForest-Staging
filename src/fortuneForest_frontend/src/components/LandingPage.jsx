@@ -256,10 +256,7 @@ const LandingPage = () => {
                                 <LoginModal
                                     isOpen={isLoginModalOpen}
                                     onClose={() => setIsLoginModalOpen(false)}
-                                    onLoginSuccess={(userData) => {
-                                        setUser(userData);
-                                        setIsAuthenticated(true);
-                                    }}
+                                    onLoginSuccess={handleLoginSuccess}
                                 />
                             </motion.div>
                         )}

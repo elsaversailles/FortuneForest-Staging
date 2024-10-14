@@ -3,14 +3,16 @@ import { toast } from 'react-hot-toast';
 import { fortuneForest_backend } from 'declarations/fortuneForest_backend';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 import { FaSpinner } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom' //this
+import { useNavigate } from 'react-router-dom';
+import LoadingPage from '../LoadingPage';
 
 const LoginModal = ({ isOpen, onClose, onLoginSuccess }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate(); // Initialize useNavigate
+  const [isLoadingPage, setIsLoadingPage] = useState(false);
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -19,6 +21,19 @@ const LoginModal = ({ isOpen, onClose, onLoginSuccess }) => {
       const result = await fortuneForest_backend.verify_user_login_credentials(email, password);
       if (result.length > 0) {
         const user = JSON.parse(result[0]);
+        const sessionToken = generateSessionToken();
+        localStorage.setItem('sessionToken', sessionToken);
+        localStorage.setItem('user', JSON.stringify(user));
+
+        setIsLoadingPage(true);
+
+        setTimeout(() => {
+          if (typeof onLoginSuccess === 'function') {
+            onLoginSuccess(user);
+          }
+          window.location.reload();
+        }, 3000);
+
         toast.success("Login Successful!", {
           icon: '🌳',
           style: {
@@ -27,11 +42,6 @@ const LoginModal = ({ isOpen, onClose, onLoginSuccess }) => {
             color: '#fff',
           },
         });
-        if (typeof onLoginSuccess === 'function') {
-          onLoginSuccess(user);
-        }
-        navigate('/test'); //this
-        onClose();
       } else {
         toast.error("Invalid email or password", {
           icon: '❌',
@@ -57,7 +67,15 @@ const LoginModal = ({ isOpen, onClose, onLoginSuccess }) => {
     }
   };
 
+  const generateSessionToken = () => {
+    return Math.random().toString(36).substr(2) + Date.now().toString(36);
+  };
+
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
+
+  if (isLoadingPage) {
+    return <LoadingPage />;
+  }
 
   if (!isOpen) return null;
 

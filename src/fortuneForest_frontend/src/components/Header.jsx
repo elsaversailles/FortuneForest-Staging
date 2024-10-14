@@ -5,14 +5,24 @@ import LoginModal from './auth/LoginModal';
 import { useMediaQuery } from 'react-responsive';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiMenu, FiX, FiUser } from 'react-icons/fi';
+import { useNavigate } from 'react-router-dom';
+import LoadingPage from './LoadingPage';
 
-const Header = ({ isAuthenticated = false }) => {
+const Header = ({ isAuthenticated, user }) => {
     const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
     const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const isMobile = useMediaQuery({ maxWidth: 767 });
+    const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
 
     const toggleDrawer = () => setIsDrawerOpen(!isDrawerOpen);
+
+    const handleLogout = () => {
+        localStorage.removeItem('sessionToken');
+        localStorage.removeItem('user');
+        navigate('/');
+    };
 
     const drawerVariants = {
         closed: { x: '100%' },
@@ -39,8 +49,8 @@ const Header = ({ isAuthenticated = false }) => {
                                 <>
                                     <Button variant="ghost" className="text-white">Dashboard</Button>
                                     <Button variant="ghost" className="text-white">Profile</Button>
-                                    <Button variant="secondary" className="bg-white text-[#75b957] hover:bg-opacity-90 transition-all duration-300 shadow-md">
-                                        <FiUser className="mr-2" /> Account
+                                    <Button variant="secondary" className="bg-white text-[#75b957] hover:bg-opacity-90 transition-all duration-300 shadow-md" onClick={handleLogout}>
+                                        <FiUser className="mr-2" /> Logout
                                     </Button>
                                 </>
                             ) : (
@@ -85,8 +95,8 @@ const Header = ({ isAuthenticated = false }) => {
                                         <Button fullWidth variant="ghost" className="text-white hover:bg-green-600 transition-colors py-3 text-lg font-semibold">
                                             Profile
                                         </Button>
-                                        <Button fullWidth variant="secondary" className="bg-white text-[#75b957] hover:bg-opacity-90 transition-all duration-300 shadow-md py-3 text-lg font-semibold">
-                                            <FiUser className="mr-2" /> Account
+                                        <Button fullWidth variant="secondary" className="bg-white text-[#75b957] hover:bg-opacity-90 transition-all duration-300 shadow-md py-3 text-lg font-semibold" onClick={handleLogout}>
+                                            <FiUser className="mr-2" /> Logout
                                         </Button>
                                     </>
                                 ) : (

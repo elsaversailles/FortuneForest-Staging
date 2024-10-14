@@ -1,12 +1,31 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import AuthenticatedLayout from './layouts/AuthenticatedLayout';
 import { motion } from 'framer-motion';
 
-const Dashboard = ({ user }) => {
+const Dashboard = () => {
+    const [user, setUser] = useState(null);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const sessionToken = localStorage.getItem('sessionToken');
+        const storedUser = localStorage.getItem('user');
+
+        if (!sessionToken || !storedUser) {
+            navigate('/');
+        } else {
+            setUser(JSON.parse(storedUser));
+        }
+    }, [navigate]);
+
+    if (!user) {
+        return null; // or a loading spinner
+    }
+
     return (
         <AuthenticatedLayout>
             <div className="p-6">
-                <motion.h1 
+                <motion.h1
                     className="text-4xl font-bold text-green-800 mb-6"
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -16,7 +35,7 @@ const Dashboard = ({ user }) => {
                 </motion.h1>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <motion.div 
+                    <motion.div
                         className="bg-white p-6 rounded-lg shadow-md"
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
@@ -27,7 +46,7 @@ const Dashboard = ({ user }) => {
                         <p>Forest health: 95%</p>
                     </motion.div>
 
-                    <motion.div 
+                    <motion.div
                         className="bg-white p-6 rounded-lg shadow-md"
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
@@ -38,7 +57,7 @@ const Dashboard = ({ user }) => {
                         <p>Latest: Master Planter</p>
                     </motion.div>
 
-                    <motion.div 
+                    <motion.div
                         className="bg-white p-6 rounded-lg shadow-md"
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
