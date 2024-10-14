@@ -5,6 +5,9 @@ import { Toaster } from 'react-hot-toast';
 import LandingPage from './components/LandingPage';
 import Dashboard from './components/Dashboard';
 import Footer from './components/Footer';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import NewPage from './components/pages/NewPage';
+import SlotMachine from './components/pages/slotmachine';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
