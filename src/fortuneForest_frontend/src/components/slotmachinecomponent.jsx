@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import '../CSS/slotmachinecss.css';
+// import '../CSS/slotmachinecss.css';
 import { gsap } from 'gsap';
 
 const SlotMachineComponent = () => {
