@@ -3,30 +3,35 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import AuthenticatedLayout from './layouts/AuthenticatedLayout';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { EffectCoverflow, Pagination, Navigation } from 'swiper/modules';
+import { EffectCards, Pagination, Navigation } from 'swiper/modules';
 import 'swiper/css';
-import 'swiper/css/effect-coverflow';
+import 'swiper/css/effect-cards';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
 const Dashboard = ({ user }) => {
     const svgIcons = [TreeSVG, CoinSVG, GamepadSVG, MedalSVG, LeafSVG, SeedlingSVG];
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
-    const handleGameRedirect = (game) => {
-        switch (game) {
-            case 'forest-slots':
-                navigate('/slotmachine');
-                break;
-            // Add other game redirections here
-            default:
-                console.log('Game not implemented yet');
-        }
-    };
+    // const handleGameRedirect = (game) => {
+    //     switch (game) {
+    //         case 'forest-slots':
+    //             navigate('/slotmachine');
+    //             break;
+    //         case 'color-match':
+    //             navigate('/color-match');
+    //             break;
+    //         case 'eco-wheel':
+    //             navigate('/eco-wheel');
+    //             break;
+    //         default:
+    //             console.log('Game not implemented yet');
+    //     }
+    // };
 
     return (
         <AuthenticatedLayout>
-            <div className="relative min-h-screen bg-gradient-to-br from-green-400 to-blue-500 overflow-hidden">
+            <div className="relative min-h-screen bg-gradient-to-br from-green-400 to-blue-500 overflow-hidden pb-20">
                 <div className="absolute inset-0 opacity-10">
                     <div className="flex animate-marquee-infinite">
                         {[...Array(40)].map((_, index) => (
@@ -63,63 +68,42 @@ const Dashboard = ({ user }) => {
                     </motion.div>
 
                     <motion.div
-                        className="mt-12 bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg p-12 py-16 rounded-lg shadow-xl border border-white border-opacity-20"
+                        className="mt-12 bg-white p-12 py-16 rounded-lg shadow-xl border border-gray-200"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: 0.6 }}
                     >
-                        <h2 className="text-3xl font-bold mb-8 text-white text-center">Enchanted Forest Games</h2>
-                        <Swiper
-                            effect={'coverflow'}
-                            grabCursor={true}
-                            centeredSlides={true}
-                            slidesPerView={'auto'}
-                            coverflowEffect={{
-                                rotate: 50,
-                                stretch: 0,
-                                depth: 100,
-                                modifier: 1,
-                                slideShadows: true,
-                            }}
-                            pagination={true}
-                            navigation={true}
-                            modules={[EffectCoverflow, Pagination, Navigation]}
-                            className="mySwiper"
-                        >
-                            <SwiperSlide>
-                                <GameCard
-                                    title="Leaf Color Symphony"
-                                    description="Immerse yourself in a mesmerizing cascade of colorful leaves. Test your reflexes and color recognition skills as you match falling leaves to their corresponding targets. Each successful match grows your virtual forest and earns you valuable eco-points!"
-                                    icon={LeafSVG}
-                                    buttonText="Play Now"
-                                    onButtonClick={() => handleGameRedirect('color-match')}
-                                />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <GameCard
-                                    title="Woodland Wonders Slots"
-                                    description="Step into the magical forest casino! Spin the reels adorned with charming woodland creatures and mystical forest symbols. Match rare combinations to unlock hidden treasures and contribute to real-world reforestation efforts with every spin!"
-                                    icon={GamepadSVG}
-                                    buttonText="Try Your Luck"
-                                    onButtonClick={() => handleGameRedirect('forest-slots')}
-                                />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <GameCard
-                                    title="Eco Destiny Wheel"
-                                    description="Give the Wheel of Eco Destiny a whirl! Each spin presents a unique opportunity to win eco-friendly rewards, plant virtual trees, or contribute to global sustainability initiatives. Watch your positive impact grow with every turn!"
-                                    icon={SeedlingSVG}
-                                    buttonText="Spin the Wheel"
-                                    onButtonClick={() => handleGameRedirect('eco-wheel')}
-                                />
-                            </SwiperSlide>
-                        </Swiper>
+                        <h2 className="text-3xl font-bold mb-12 text-gray-800 text-center">Enchanted Forest Games</h2>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            <GameCard
+                                title="Leaf Color Symphony"
+                                description="Immerse yourself in a mesmerizing cascade of colorful leaves. Test your reflexes and color recognition skills as you match falling leaves to their corresponding targets."
+                                icon={LeafSVG}
+                                buttonText="Play Now"
+                                // onButtonClick={() => handleGameRedirect('color-match')}
+                            />
+                            <GameCard
+                                title="Woodland Wonders Slots"
+                                description="Step into the magical forest casino! Spin the reels adorned with charming woodland creatures and mystical forest symbols. Match rare combinations to unlock hidden treasures."
+                                icon={GamepadSVG}
+                                buttonText="Try Your Luck"
+                                // onButtonClick={() => handleGameRedirect('forest-slots')}
+                            />
+                            <GameCard
+                                title="Eco Destiny Wheel"
+                                description="Give the Wheel of Eco Destiny a whirl! Each spin presents a unique opportunity to win eco-friendly rewards, plant virtual trees, or contribute to global sustainability initiatives."
+                                icon={SeedlingSVG}
+                                buttonText="Spin the Wheel"
+                                // onButtonClick={() => handleGameRedirect('eco-wheel')}
+                            />
+                        </div>
                     </motion.div>
                 </div>
             </div>
         </AuthenticatedLayout>
     );
 };
+
 
 const ActionButton = ({ icon: Icon, text }) => (
     <button className="flex flex-col items-center justify-center p-4 bg-white bg-opacity-20 rounded-lg hover:bg-opacity-30 transition-colors duration-300">
@@ -129,18 +113,37 @@ const ActionButton = ({ icon: Icon, text }) => (
 );
 
 const GameCard = ({ title, description, icon: Icon, buttonText, onButtonClick }) => (
-    <div className="bg-white bg-opacity-30 backdrop-filter backdrop-blur-lg p-6 rounded-lg shadow-xl border border-white border-opacity-20 text-white h-full flex flex-col">
-        <Icon className="w-16 h-16 mb-4 mx-auto text-green-300" />
-        <h3 className="text-2xl font-bold mb-3">{title}</h3>
-        <p className="text-sm mb-6 flex-grow">{description}</p>
-        <button
-            className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out transform hover:scale-105"
+    <motion.div
+        className="game-card bg-white p-8 rounded-2xl shadow-xl border border-gray-200 text-gray-800 h-full flex flex-col justify-between relative overflow-hidden"
+        whileHover={{
+            rotateY: 15,
+            rotateX: 5,
+            scale: 1.05,
+            transition: { duration: 0.3 }
+        }}
+        style={{ perspective: '1000px' }}
+    >
+        <div className="relative z-10">
+            <motion.div
+                className="h-48 mb-6 bg-gradient-to-br from-green-100 to-blue-100 rounded-lg flex items-center justify-center"
+                whileHover={{ rotateY: 15, scale: 1.05 }}
+            >
+                <Icon className="w-32 h-32 text-green-500" />
+            </motion.div>
+            <h3 className="text-3xl font-bold mb-4 text-center">{title}</h3>
+            <p className="text-lg mb-8 text-center">{description}</p>
+        </div>
+        <motion.button
+            className="relative z-10 bg-gradient-to-r from-green-500 to-blue-500 text-white font-bold py-4 px-6 rounded-full transition duration-300 ease-in-out w-full text-xl"
+            whileHover={{ scale: 1.05, boxShadow: '0px 5px 15px rgba(0, 0, 0, 0.2)' }}
+            whileTap={{ scale: 0.95 }}
             onClick={onButtonClick}
         >
             {buttonText}
-        </button>
-    </div>
+        </motion.button>
+    </motion.div>
 );
+
 const TreeSVG = (props) => (
     <svg {...props} viewBox="0 0 24 24" fill="currentColor">
         <path d="M12 2L4 8v12c0 1.1 0.9 2 2 2h12c1.1 0 2-0.9 2-2V8L12 2zm0 3.8L18 10v8H6v-8l6-4.2z" />

@@ -35,3 +35,32 @@
 ::-webkit-scrollbar-button:single-button:vertical:decrement {
     transform: rotate(180deg);
 }
+
+.game-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(
+        transparent,
+        rgba(168, 85, 247, 0.4),
+        transparent 30%
+    );
+    animation: rotate 4s linear infinite;
+}
+
+.game-card::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    background: white;
+    border-radius: 16px;
+}
+
+@keyframes rotate {
+    100% {
+        transform: rotate(1turn);
+    }
+}

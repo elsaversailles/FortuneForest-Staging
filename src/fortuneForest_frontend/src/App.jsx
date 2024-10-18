@@ -6,7 +6,7 @@ import LandingPage from './components/LandingPage';
 import Dashboard from './components/Dashboard';
 import Footer from './components/Footer';
 import Test from './components/Test';
-import SlotMachine from './components/pages/slotmachine';
+// import SlotMachine from './components/pages/slotmachine';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -40,9 +40,9 @@ function App() {
               isAuthenticated ? <Dashboard user={user} /> : <Navigate to="/" />
             } />
             <Route path="/test" element={<Test />} />
-            <Route path="/slotmachine" element={
+            {/* <Route path="/slotmachine" element={
               isAuthenticated ? <SlotMachine user={user} /> : <Navigate to="/" />
-            } />
+            } /> */}
           </Routes>
         </div>
         <Footer />
