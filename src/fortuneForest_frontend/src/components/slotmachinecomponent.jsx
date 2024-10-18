@@ -1,6 +1,215 @@
 import React, { useEffect, useRef, useState } from 'react';
 // import '../CSS/slotmachinecss.css';
 import { gsap } from 'gsap';
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
+
+const slotMachineStyles = css`
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+  }
+
+  html,
+  body {
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 400;
+  }
+
+  svg,
+  ul,
+  li,
+  .container {
+    position: absolute;
+  }
+
+  .stage {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 460px;
+    position: relative;
+  }
+
+  .results,
+  .button-area {
+    padding: 20px 0;
+    text-align: center;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .results {
+    margin: 0;
+  }
+
+  .button-area {
+    margin-bottom: 0;
+  }
+
+  button {
+    text-align: center;
+    display: inline-block;
+    border-radius: 50px;
+    font-size: 1.5em;
+    padding: 10px 55px;
+    background-color: #78c6b6; /* Button background color */
+    border: 2px solid #20223b; /* Dark border for 3D contrast */
+    color: #20223b; /* Text color */
+    transition: all 0.2s ease;
+    font-weight: 500;
+    font-family: 'Ubuntu', sans-serif;
+    box-shadow: 0 4px 0 #20223b, 0 4px 8px rgba(0, 0, 0, 0.2); /* 3D shadow */
+  }
+
+  button:hover,
+  button:focus-visible {
+    background: white;
+    color: #16a085;
+    border-color: #16a085;
+  }
+
+  .ring,
+  .item,
+  .console-outer {
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    user-select: none;
+  }
+
+  .row.console {
+    flex: 1 1 auto;
+    display: flex;
+    max-height: 520px;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .console-outer {
+    max-height: 460px;
+    min-height: 130px;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: row;
+    max-width: 600px;
+    margin: auto;
+    margin-bottom: 0;
+    margin-top: 0;
+    gap: 0;
+  }
+
+  .col.wheel {
+    padding: 0 40px;
+    max-height: 430px;
+    min-height: 130px;
+    height: 100%;
+    overflow: hidden;
+    margin: auto;
+    flex: 0 0 calc(33.333333333% - 2px);
+    max-width: calc(33.333333333% - 2px);
+    position: relative;
+  }
+
+  .console-outer:after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    content: " ";
+  }
+
+  .container {
+    perspective: 2000px;
+    width: 130px;
+    height: 130px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    position: relative;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .item {
+    display: flex;
+    justify-content: center;
+    vertical-align: center;
+    margin: auto;
+    border: 1px solid transparent;
+    border-radius: 50%;
+    backface-visibility: hidden;
+    background: transparent;
+    opacity: 0.8;
+  }
+
+  .item span {
+    font-size: 2.5em;
+    margin: auto;
+  }
+
+  .item.active {
+    box-shadow: inset 0px 0 10px 0px #ecd820b0 !important;
+    opacity: 1 !important;
+  }
+
+  .results {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+  }
+
+  .results div {
+    font-size: 20px;
+    text-align: center;
+    color: black;
+  }
+
+  .stage.notstarted .active {
+    box-shadow: none;
+  }
+
+  .holdcontrols {
+    max-width: 465px;
+    width: 100%;
+    display: flex;
+    margin: auto;
+    margin-top: 0;
+  }
+
+  .holdcontrols .col {
+    padding: 10px 0;
+    padding-top: 0;
+    text-align: center;
+    flex: 0 0 calc(33.333333333% - 2px);
+    max-width: calc(33.333333333% - 2px);
+  }
+
+  .holdcontrols button {
+    font-size: 1em;
+    padding: 5px 25px;
+  }
+
+  .holdcontrols button.held {
+    background: #16a085;
+    color: white;
+    border-color: #16a085;
+  }
+`;
 
 const SlotMachineComponent = () => {
     const [textContent, setTextContent] = useState('Press Button to start?');
@@ -119,13 +328,24 @@ const SlotMachineComponent = () => {
       };
       
   return (
-<div>
-      <div className="flex justify-center">
-        <div
-          className="w-800 h-180 bg-cover bg-center bg-no-repeat flex justify-center items-center text-black text-lg"
-          style={{ backgroundImage: "url('image/slotborder.png')" }}
-        >
-          <div className="results flex flex-col justify-center items-center">
+<div css={slotMachineStyles}>
+      <div className="min-h-44 flex justify-center">
+                <div
+                style={{
+                  width: '700px',
+                  height: '180px',
+                  backgroundImage: "url('image/slotborder.png')",
+                  backgroundSize: 'contain',
+                  backgroundPosition: 'center',
+                  backgroundRepeat: 'no-repeat',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  color: 'black',
+                  fontSize: '18px',
+                }}
+          >
+          <div>
             <div id="textcontent">{textContent}</div>
             </div>
         </div>
@@ -189,15 +409,7 @@ const SlotMachineComponent = () => {
             </div>
           </div>
 
-          <div className="row holdcontrols flex max-w-[465px] mx-auto mt-0">
-            {['ring1', 'ring2', 'ring3'].map((ring, index) => (
-              <div key={index} className="col flex-none max-w-[calc(33.333333333%-2px)]">
-                <button data-controls={ring} id={`hold${index + 1}`} className="hold bg-gray-300 text-black px-5 py-2 rounded">
-                  Hold
-                </button>
-              </div>
-            ))}
-          </div>
+
         </div>
         <div className="button-area flex justify-center">
         <button onClick={handleSpin} className="trigger bg-[#78C6B6] text-[#20223B] rounded-full text-2xl py-2 px-[55px] border-2 border-[#20223B] transition-all duration-200 hover:bg-white hover:text-[#16a085] hover:border-[#16a085] shadow-[0_4px_0_#20223B,0_4px_8px_rgba(0,0,0,0.2)] font-ubuntu font-medium">
