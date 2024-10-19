@@ -2,32 +2,28 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import AuthenticatedLayout from './layouts/AuthenticatedLayout';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { EffectCards, Pagination, Navigation } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/effect-cards';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 const Dashboard = ({ user }) => {
     const svgIcons = [TreeSVG, CoinSVG, GamepadSVG, MedalSVG, LeafSVG, SeedlingSVG];
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
-    // const handleGameRedirect = (game) => {
-    //     switch (game) {
-    //         case 'forest-slots':
-    //             navigate('/slotmachine');
-    //             break;
-    //         case 'color-match':
-    //             navigate('/color-match');
-    //             break;
-    //         case 'eco-wheel':
-    //             navigate('/eco-wheel');
-    //             break;
-    //         default:
-    //             console.log('Game not implemented yet');
-    //     }
-    // };
+    const handleGameRedirect = (game) => {
+        switch (game) {
+            case 'forest-slots':
+                navigate('/slotmachine');
+                break;
+            case 'color-match':
+                navigate('/color-match');
+                break;
+            case 'eco-wheel':
+                navigate('/eco-wheel');
+                break;
+            default:
+                console.log('Game not implemented yet');
+        }
+    };
 
     return (
         <AuthenticatedLayout>
@@ -80,21 +76,21 @@ const Dashboard = ({ user }) => {
                                 description="Immerse yourself in a mesmerizing cascade of colorful leaves. Test your reflexes and color recognition skills as you match falling leaves to their corresponding targets."
                                 icon={LeafSVG}
                                 buttonText="Play Now"
-                                // onButtonClick={() => handleGameRedirect('color-match')}
+                                onButtonClick={() => handleGameRedirect('color-match')}
                             />
                             <GameCard
                                 title="Woodland Wonders Slots"
                                 description="Step into the magical forest casino! Spin the reels adorned with charming woodland creatures and mystical forest symbols. Match rare combinations to unlock hidden treasures."
                                 icon={GamepadSVG}
                                 buttonText="Try Your Luck"
-                                // onButtonClick={() => handleGameRedirect('forest-slots')}
+                                onButtonClick={() => handleGameRedirect('forest-slots')}
                             />
                             <GameCard
                                 title="Eco Destiny Wheel"
                                 description="Give the Wheel of Eco Destiny a whirl! Each spin presents a unique opportunity to win eco-friendly rewards, plant virtual trees, or contribute to global sustainability initiatives."
                                 icon={SeedlingSVG}
                                 buttonText="Spin the Wheel"
-                                // onButtonClick={() => handleGameRedirect('eco-wheel')}
+                                onButtonClick={() => handleGameRedirect('eco-wheel')}
                             />
                         </div>
                     </motion.div>
@@ -104,7 +100,6 @@ const Dashboard = ({ user }) => {
     );
 };
 
-
 const ActionButton = ({ icon: Icon, text }) => (
     <button className="flex flex-col items-center justify-center p-4 bg-white bg-opacity-20 rounded-lg hover:bg-opacity-30 transition-colors duration-300">
         <Icon className="w-6 h-6 text-white mb-2" />
@@ -113,36 +108,26 @@ const ActionButton = ({ icon: Icon, text }) => (
 );
 
 const GameCard = ({ title, description, icon: Icon, buttonText, onButtonClick }) => (
-    <motion.div
-        className="game-card bg-white p-8 rounded-2xl shadow-xl border border-gray-200 text-gray-800 h-full flex flex-col justify-between relative overflow-hidden"
-        whileHover={{
-            rotateY: 15,
-            rotateX: 5,
-            scale: 1.05,
-            transition: { duration: 0.3 }
-        }}
-        style={{ perspective: '1000px' }}
-    >
-        <div className="relative z-10">
-            <motion.div
-                className="h-48 mb-6 bg-gradient-to-br from-green-100 to-blue-100 rounded-lg flex items-center justify-center"
-                whileHover={{ rotateY: 15, scale: 1.05 }}
-            >
-                <Icon className="w-32 h-32 text-green-500" />
-            </motion.div>
-            <h3 className="text-3xl font-bold mb-4 text-center">{title}</h3>
-            <p className="text-lg mb-8 text-center">{description}</p>
+    <Card className="game-card h-full flex flex-col justify-between overflow-hidden">
+      <CardHeader>
+        <div className="h-40 mb-4 bg-gradient-to-br from-green-100 to-blue-100 rounded-lg flex items-center justify-center">
+          <Icon className="w-24 h-24 text-green-500" />
         </div>
-        <motion.button
-            className="relative z-10 bg-gradient-to-r from-green-500 to-blue-500 text-white font-bold py-4 px-6 rounded-full transition duration-300 ease-in-out w-full text-xl"
-            whileHover={{ scale: 1.05, boxShadow: '0px 5px 15px rgba(0, 0, 0, 0.2)' }}
-            whileTap={{ scale: 0.95 }}
-            onClick={onButtonClick}
+        <CardTitle className="text-2xl font-bold text-center">{title}</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <p className="text-sm text-center text-gray-600">{description}</p>
+      </CardContent>
+      <CardFooter>
+        <Button
+          className="w-full bg-gradient-to-r from-green-500 to-blue-500 text-white font-bold py-3 px-4 rounded-full text-base transition duration-300 ease-in-out hover:shadow-lg"
+          onClick={onButtonClick}
         >
-            {buttonText}
-        </motion.button>
-    </motion.div>
-);
+          {buttonText}
+        </Button>
+      </CardFooter>
+    </Card>
+  );  
 
 const TreeSVG = (props) => (
     <svg {...props} viewBox="0 0 24 24" fill="currentColor">

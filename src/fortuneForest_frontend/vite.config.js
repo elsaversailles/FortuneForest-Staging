@@ -1,4 +1,5 @@
 import { fileURLToPath, URL } from 'url';
+import path from 'path';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 import environment from 'vite-plugin-environment';
@@ -10,7 +11,7 @@ export default defineConfig({
   base: './',
   build: {
     emptyOutDir: true,
-    chunkSizeWarningLimit: 1000, // Set to 1000 kB for some large chunks
+    chunkSizeWarningLimit: 1000,
   },
   optimizeDeps: {
     esbuildOptions: {
@@ -33,13 +34,9 @@ export default defineConfig({
     environment("all", { prefix: "DFX_" }),
   ],
   resolve: {
-    alias: [
-      {
-        find: "declarations",
-        replacement: fileURLToPath(
-          new URL("../declarations", import.meta.url)
-        ),
-      },
-    ],
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+      'declarations': fileURLToPath(new URL("../declarations", import.meta.url)),
+    },
   },
 });

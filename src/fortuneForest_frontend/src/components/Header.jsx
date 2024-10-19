@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import RegisterModal from './auth/RegisterModal';
 import LoginModal from './auth/LoginModal';
 import { useMediaQuery } from 'react-responsive';
@@ -7,6 +7,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FiMenu, FiX, FiUser } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
 import LoadingPage from './LoadingPage';
+import {
+    Sheet,
+    SheetContent,
+    SheetHeader,
+    SheetTitle,
+    SheetTrigger,
+} from "@/components/ui/sheet";
+
 
 const Header = ({ isAuthenticated, user: propUser }) => {
     const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
@@ -56,9 +64,38 @@ const Header = ({ isAuthenticated, user: propUser }) => {
                         </h1>
                     </div>
                     {isMobile ? (
-                        <Button variant="ghost" onClick={toggleDrawer} className="text-white">
-                            <FiMenu size={24} />
-                        </Button>
+                        <Sheet>
+                            <SheetTrigger asChild>
+                                <Button variant="ghost" className="text-white">
+                                    <FiMenu size={24} />
+                                </Button>
+                            </SheetTrigger>
+                            <SheetContent className="bg-green-600 text-white">
+                                <SheetHeader>
+                                    <SheetTitle className="text-white">Menu</SheetTitle>
+                                </SheetHeader>
+                                <div className="space-y-6 mt-6">
+                                    {isAuthenticated ? (
+                                        <>
+                                            <Button variant="ghost" className="w-full justify-start">Dashboard</Button>
+                                            <Button variant="ghost" className="w-full justify-start">Profile</Button>
+                                            <Button variant="destructive" className="w-full" onClick={handleLogout}>
+                                                <FiUser className="mr-2" /> Logout
+                                            </Button>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Button variant="default" className="w-full" onClick={() => setIsLoginModalOpen(true)}>
+                                                Sign in
+                                            </Button>
+                                            <Button variant="outline" className="w-full" onClick={() => setIsRegisterModalOpen(true)}>
+                                                Sign Up
+                                            </Button>
+                                        </>
+                                    )}
+                                </div>
+                            </SheetContent>
+                        </Sheet>
                     ) : (
                         <nav className="flex items-center space-x-4">
                             {isAuthenticated && user ? (
@@ -111,75 +148,27 @@ const Header = ({ isAuthenticated, user: propUser }) => {
                                 </>
                             ) : (
                                 <>
-                                    <Button variant="secondary" className="bg-white text-[#75b957] hover:bg-opacity-90 transition-all duration-300 shadow-md" onClick={() => setIsLoginModalOpen(true)}>
+                                    <Button
+                                        variant="outline"
+                                        className="bg-transparent border-green-500 text-white hover:bg-green-500 hover:text-black hover:border-black transition-colors duration-300"
+                                        onClick={() => setIsLoginModalOpen(true)}
+                                    >
                                         Sign in
                                     </Button>
-                                    <Button variant="outline" className="border-white text-white hover:bg-white hover:text-[#75b957] transition-all duration-300 shadow-md" onClick={() => setIsRegisterModalOpen(true)}>
+                                    <Button
+                                        variant="outline"
+                                        className="bg-green-500 border-white text-black hover:bg-transparent hover:text-white hover:border-green-500 transition-colors duration-300"
+                                        onClick={() => setIsRegisterModalOpen(true)}
+                                    >
                                         Sign Up
                                     </Button>
+
                                 </>
                             )}
                         </nav>
                     )}
                 </div>
             </div>
-
-            <AnimatePresence>
-                {isDrawerOpen && (
-                    <motion.div
-                        className="fixed top-0 right-0 bottom-0 w-64 bg-[#75b957] shadow-lg z-50 flex flex-col"
-                        variants={drawerVariants}
-                        initial="closed"
-                        animate="open"
-                        exit="closed"
-                        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                    >
-                        <div className="p-4 flex flex-col h-full">
-                            <Button
-                                variant="ghost"
-                                onClick={toggleDrawer}
-                                className="self-end text-white hover:bg-green-600 transition-colors mb-8"
-                            >
-                                <FiX size={24} />
-                            </Button>
-                            <div className="space-y-6">
-                                {isAuthenticated ? (
-                                    <>
-                                        <Button fullWidth variant="ghost" className="text-white hover:bg-green-600 transition-colors py-3 text-lg font-semibold">
-                                            Dashboard
-                                        </Button>
-                                        <Button fullWidth variant="ghost" className="text-white hover:bg-green-600 transition-colors py-3 text-lg font-semibold">
-                                            Profile
-                                        </Button>
-                                        <Button fullWidth variant="secondary" className="bg-white text-[#75b957] hover:bg-opacity-90 transition-all duration-300 shadow-md py-3 text-lg font-semibold" onClick={handleLogout}>
-                                            <FiUser className="mr-2" /> Logout
-                                        </Button>
-                                    </>
-                                ) : (
-                                    <>
-                                        <Button
-                                            fullWidth
-                                            variant="secondary"
-                                            className="bg-white text-[#75b957] hover:bg-opacity-90 transition-all duration-300 shadow-md py-3 text-lg font-semibold"
-                                            onClick={() => { setIsLoginModalOpen(true); toggleDrawer(); }}
-                                        >
-                                            Sign in
-                                        </Button>
-                                        <Button
-                                            fullWidth
-                                            variant="outline"
-                                            className="border-2 border-white text-white hover:bg-white hover:text-[#75b957] transition-all duration-300 shadow-md py-3 text-lg font-semibold"
-                                            onClick={() => { setIsRegisterModalOpen(true); toggleDrawer(); }}
-                                        >
-                                            Sign Up
-                                        </Button>
-                                    </>
-                                )}
-                            </div>
-                        </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
 
             <RegisterModal isOpen={isRegisterModalOpen} onClose={() => setIsRegisterModalOpen(false)} />
             <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
