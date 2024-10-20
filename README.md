@@ -42,10 +42,10 @@ Exclude the following folders on git repo:
 3. dfx canister uninstall-code --all
 4. dfx stop
 
-#NPM Packages
-!<img src="https://cdn.worldvectorlogo.com/logos/radix-ui.svg" width="50" height="60">radix-ui
+<h3>NPM Packages</h3>
+<p><img src="https://cdn.worldvectorlogo.com/logos/radix-ui.svg" width="50" height="60">radix-ui</p>
 clsx
-class-variance-authority
+<p><img src="https://cva.style/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fwallpaper-hd.6da17633.jpg&w=1920&q=75" width="50" height="60">class-variance-authority</p> 
 framer-motion
 gsap
 lucide-react
