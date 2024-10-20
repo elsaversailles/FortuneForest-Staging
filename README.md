@@ -43,7 +43,7 @@ Exclude the following folders on git repo:
 4. dfx stop
 
 #NPM Packages
-!<img src="https://cdn.worldvectorlogo.com/logos/radix-ui.svg" width="500" height="600">radix-ui
+!<img src="https://cdn.worldvectorlogo.com/logos/radix-ui.svg" width="50" height="60">radix-ui
 clsx
 class-variance-authority
 framer-motion
