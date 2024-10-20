@@ -43,9 +43,9 @@ Exclude the following folders on git repo:
 4. dfx stop
 
 <h3>NPM Packages</h3>
-<p><img src="https://cdn.worldvectorlogo.com/logos/radix-ui.svg" width="50" height="60">radix-ui</p>
+radix-ui
 clsx
-<p><img src="https://cva.style/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fwallpaper-hd.6da17633.jpg&w=1920&q=75" width="50" height="60">class-variance-authority</p> 
+class-variance-authority
 framer-motion
 gsap
 lucide-react
@@ -56,6 +56,8 @@ shadcn
 magicui
 react-router
 emotion
+<p><img src="https://cdn.worldvectorlogo.com/logos/radix-ui.svg" width="50" height="60"> <img src="https://cva.style/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fwallpaper-hd.6da17633.jpg&w=1920&q=75" width="50" height="60"></p>
+
 
 <hr>
 <h1>Tech Stack</h1>
