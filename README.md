@@ -42,6 +42,21 @@ Exclude the following folders on git repo:
 3. dfx canister uninstall-code --all
 4. dfx stop
 
+#NPM Packages
+![Alt text](https://cdn.worldvectorlogo.com/logos/radix-ui.svg) radix-ui
+clsx
+class-variance-authority
+framer-motion
+gsap
+lucide-react
+sonner
+swiper
+tailwind
+shadcn
+magicui
+react-router
+emotion
+
 <hr>
 <h1>Tech Stack</h1>
 
