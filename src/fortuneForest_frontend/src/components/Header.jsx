@@ -91,7 +91,6 @@ const Header = ({ isAuthenticated, user: propUser }) => {
                                     {isAuthenticated ? (
                                         <>
                                             <Button variant="ghost" className="w-full justify-start">Dashboard</Button>
-                                            <Button variant="ghost" className="w-full justify-start">Profile</Button>
                                             <Button variant="destructive" className="w-full" onClick={handleLogout}>
                                                 <FiUser className="mr-2" /> Logout
                                             </Button>
@@ -162,13 +161,6 @@ const Header = ({ isAuthenticated, user: propUser }) => {
                                                         <Link to="/redeem">
                                                             <Button variant="ghost" className="w-full text-left">
                                                                 Redeem
-                                                            </Button>
-                                                        </Link>
-                                                    </NavigationMenuLink>
-                                                    <NavigationMenuLink asChild>
-                                                        <Link to="/profile">
-                                                            <Button variant="ghost" className="w-full text-left">
-                                                                Profile
                                                             </Button>
                                                         </Link>
                                                     </NavigationMenuLink>
