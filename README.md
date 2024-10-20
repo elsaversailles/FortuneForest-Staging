@@ -53,5 +53,5 @@ Exclude the following folders on git repo:
 
 <p>Project Manager: Vince Austria</p>
 <p>Backend Developer: Jefferson Regacho</p>
-<p>Frontend Developers: Gian Alcantara & Azer  </p>
+<p>Frontend Developers: Gian Alcantara & Azer Sagucio</p>
 <p>Frontend Designer: Laurence Enarin </p>
