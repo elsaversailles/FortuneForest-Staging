@@ -51,7 +51,7 @@ Exclude the following folders on git repo:
 
 <h1> Meet the Team </h1>
 
-Project Manager: Vince Austria
-Backend Developer: Jefferson Regacho
-Frontend Developers: Gian Alcantara & Azer Sagucio
-Frontend Designer: Laurence Enarin
+<p>Project Manager: Vince Austria</p>
+<p>Backend Developer: Jefferson Regacho</p>
+<p>Frontend Developers: Gian Alcantara & Azer  </p>
+<p>Frontend Designer: Laurence Enarin </p>
