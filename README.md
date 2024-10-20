@@ -56,7 +56,7 @@ shadcn
 magicui
 react-router
 emotion
-<p><img src="https://cdn.worldvectorlogo.com/logos/radix-ui.svg" width="50" height="60"> <img src="https://cva.style/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fwallpaper-hd.6da17633.jpg&w=1920&q=75" width="50" height="60"><img src="https://www.ejable.com/wp-content/uploads/2022/04/Framer-Motion.webp" width="50" height="60"></p>
+<p><img src="https://cdn.worldvectorlogo.com/logos/radix-ui.svg" width="50" height="60"> <img src="https://cva.style/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fwallpaper-hd.6da17633.jpg&w=1920&q=75" width="50" height="60"><img src="https://www.ejable.com/wp-content/uploads/2022/04/Framer-Motion.webp" width="70" height="60"></p>
 
 
 <hr>
