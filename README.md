@@ -43,21 +43,21 @@ Exclude the following folders on git repo:
 4. dfx stop
 
 <h3>NPM Packages</h3>
-<li>
-<ul>radix-ui</ul>
-<ul>clsx</ul>
-<ul>class-variance-authority</ul>
-<ul>framer-motion</ul>
-<ul>gsap</ul>
-<ul>lucide-react</ul>
-<ul>sonner</ul>
-<ul>swiper</ul>
-<ul>tailwind</ul>
-<ul>shadcn</ul>
-<ul>magicui</ul>
-<ul>react-router</ul>
-<ul>emotion</ul>
-</li>
+<ul>
+<li>radix-ui</li>
+<li>clsx</li>
+<li>class-variance-authority</li>
+<li>framer-motion</li>
+<li>gsap</li>
+<li>lucide-react</li>
+<li>sonner</li>
+<li>swiper</li>
+<li>tailwind</li>
+<li>shadcn</li>
+<li>magicui</li>
+<li>react-router</li>
+<li>emotion</li>
+</ul>
 <p><img src="https://cdn.worldvectorlogo.com/logos/radix-ui.svg" width="60" height="60"> <img src="https://cva.style/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fwallpaper-hd.6da17633.jpg&w=1920&q=75" width="50" height="60"><img src="https://www.ejable.com/wp-content/uploads/2022/04/Framer-Motion.webp" width="70" height="60"><img src="https://avatars.githubusercontent.com/u/66879934?s=48&v=4p" width="60" height="60"><img src="https://swiperjs.com/images/swiper-logo.svg" width="60" height="60"><img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg" width="50" height="60"><img src="https://avatars.githubusercontent.com/u/139895814?s=200&v=4" width="60" height="60"><img src="https://avatars.githubusercontent.com/u/166878038?s=200&v=4" width="60" height="60"><img src="https://reactrouter.com/_brand/React%20Router%20Brand%20Assets/React%20Router%20Logo/One%20Color/Dark.svg" width="60" height="60"><img src="https://raw.githubusercontent.com/emotion-js/emotion/main/emotion.png" width="60" height="60"></p>
 
 
