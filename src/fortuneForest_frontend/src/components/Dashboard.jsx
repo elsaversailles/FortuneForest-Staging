@@ -5,6 +5,7 @@ import { useMediaQuery } from 'react-responsive';
 import AuthenticatedLayout from './layouts/AuthenticatedLayout';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const Dashboard = ({ user }) => {
     const svgIcons = [TreeSVG, CoinSVG, GamepadSVG, MedalSVG, LeafSVG, SeedlingSVG];
@@ -73,26 +74,33 @@ const Dashboard = ({ user }) => {
                         <h2 className="text-2xl sm:text-3xl font-bold mb-8 sm:mb-12 text-gray-800 text-center">Enchanted Forest Games</h2>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                             <GameCard
-                                title="Leaf Color Symphony"
-                                description="Immerse yourself in a mesmerizing cascade of colorful leaves. Test your reflexes and color recognition skills as you match falling leaves to their corresponding targets."
-                                icon={LeafSVG}
-                                buttonText="Play Now"
-                                onButtonClick={() => handleGameRedirect('color-match')}
-                            />
-                            <GameCard
-                                title="Woodland Wonders Slots"
-                                description="Step into the magical forest casino! Spin the reels adorned with charming woodland creatures and mystical forest symbols. Match rare combinations to unlock hidden treasures."
+                                title="Tree and Match"
+                                description="Step into this magical game! Spin the reels adorned with charming woodland  and mystical forest symbols. Match rare combinations to win TreePoints!"
                                 icon={GamepadSVG}
                                 buttonText="Try Your Luck"
                                 onButtonClick={() => handleGameRedirect('forest-slots')}
                             />
                             <GameCard
-                                title="Eco Destiny Wheel"
+                                title="Rollete Up!"
                                 description="Give the Wheel of Eco Destiny a whirl! Each spin presents a unique opportunity to win eco-friendly rewards, plant virtual trees, or contribute to global sustainability initiatives."
                                 icon={SeedlingSVG}
                                 buttonText="Spin the Wheel"
                                 onButtonClick={() => handleGameRedirect('eco-wheel')}
                             />
+                            <Card className="flex flex-col items-center justify-between p-6 space-y-4">
+                                <CardHeader className="text-center">
+                                    <Skeleton className="h-12 w-12 rounded-full" />
+                                    <Skeleton className="h-4 w-3/4 mt-4" />
+                                </CardHeader>
+                                <CardContent className="text-center">
+                                    <Skeleton className="h-4 w-full" />
+                                    <Skeleton className="h-4 w-5/6 mt-2" />
+                                    <Skeleton className="h-4 w-4/6 mt-2" />
+                                </CardContent>
+                                <CardFooter>
+                                    <Skeleton className="h-10 w-32" />
+                                </CardFooter>
+                            </Card>
                         </div>
                     </motion.div>
                 </div>

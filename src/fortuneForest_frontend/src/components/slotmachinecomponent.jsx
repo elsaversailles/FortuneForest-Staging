@@ -329,7 +329,7 @@ const SlotMachineComponent = () => {
 
   return (
     <div css={slotMachineStyles}>
-      <div className="min-h-44 flex justify-center">
+      <div className="min-h-44 flex justify-center pb-20">
         <div
           style={{
             width: '700px',
@@ -348,7 +348,7 @@ const SlotMachineComponent = () => {
           }}
         >
           <div
-            style={{  
+            style={{
               position: 'absolute',
               top: '10px',
               fontFamily: 'Lilita One, cursive',
@@ -361,7 +361,14 @@ const SlotMachineComponent = () => {
             JACKPOT
           </div>
           <div>
-            <div id="textcontent">{textContent}</div>
+            <div style={{
+              fontFamily: 'Lilita One, cursive',
+              fontSize: '20px',
+              color: '#ffffff',
+            }}
+              id="textcontent">
+              {textContent}
+            </div>
           </div>
         </div>
       </div>

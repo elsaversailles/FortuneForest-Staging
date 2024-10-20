@@ -220,7 +220,7 @@ const LandingPage = () => {
                                     animate={missionInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                                     transition={{ delay: 0.6, duration: 0.8, ease: "easeOut" }}
                                 >
-                                    FortuneForest: Where virtual triumphs seed real-world forests.
+                                    *Data from GlobalForest watch, target forestation of 250 Trees/Hectare"
                                 </motion.p>
                                 <motion.img
                                     src="mission-image.jpg"
