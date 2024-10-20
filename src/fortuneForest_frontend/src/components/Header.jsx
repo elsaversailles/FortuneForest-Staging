@@ -5,8 +5,17 @@ import LoginModal from './auth/LoginModal';
 import { useMediaQuery } from 'react-responsive';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiMenu, FiX, FiUser } from 'react-icons/fi';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import LoadingPage from './LoadingPage';
+import {
+    NavigationMenu,
+    NavigationMenuContent,
+    NavigationMenuItem,
+    NavigationMenuLink,
+    NavigationMenuList,
+    NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
     Sheet,
     SheetContent,
@@ -22,8 +31,9 @@ const Header = ({ isAuthenticated, user: propUser }) => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [user, setUser] = useState(propUser);
     const isMobile = useMediaQuery({ maxWidth: 767 });
-    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
+    const randomNames = ['Alice', 'Bob', 'Charlie', 'Diana', 'Ethan', 'Fiona', 'George', 'Hannah', 'Ian', 'Julia'];
+    const randomName = randomNames[Math.floor(Math.random() * randomNames.length)];
 
     const toggleDrawer = () => setIsDrawerOpen(!isDrawerOpen);
 
@@ -35,18 +45,10 @@ const Header = ({ isAuthenticated, user: propUser }) => {
     }, []);
 
     const handleLogout = () => {
-        setIsLoading(true);
         localStorage.removeItem('sessionToken');
         localStorage.removeItem('user');
-
-        setTimeout(() => {
-            window.location.reload();
-        }, 2000);
+        window.location.reload();
     };
-
-    if (isLoading) {
-        return <LoadingPage />;
-    }
 
     const drawerVariants = {
         closed: { x: '100%' },
@@ -58,10 +60,21 @@ const Header = ({ isAuthenticated, user: propUser }) => {
             <div className="container mx-auto px-6 py-4">
                 <div className="flex justify-between items-center">
                     <div className="flex items-center">
-                        <img src="/fortuneforest.jpg" alt="FortuneForest logo" className="w-10 h-10 mr-3 rounded-full shadow-md border-2 border-white" />
-                        <h1 className="text-3xl font-extrabold text-white tracking-tight font-['Bubblegum_Sans']">
-                            <span className="text-green-300">F</span>ortune<span className="text-green-300">F</span>orest
-                        </h1>
+                        {isAuthenticated ? (
+                            <Link to="/dashboard" className="flex items-center">
+                                <img src="/fortuneforest.jpg" alt="FortuneForest logo" className="w-10 h-10 mr-3 rounded-full shadow-md border-2 border-white" />
+                                <h1 className="text-3xl font-extrabold text-white tracking-tight font-['Bubblegum_Sans']">
+                                    <span className="text-green-300">F</span>ortune<span className="text-green-300">F</span>orest
+                                </h1>
+                            </Link>
+                        ) : (
+                            <>
+                                <img src="/fortuneforest.jpg" alt="FortuneForest logo" className="w-10 h-10 mr-3 rounded-full shadow-md border-2 border-white" />
+                                <h1 className="text-3xl font-extrabold text-white tracking-tight font-['Bubblegum_Sans']">
+                                    <span className="text-green-300">F</span>ortune<span className="text-green-300">F</span>orest
+                                </h1>
+                            </>
+                        )}
                     </div>
                     {isMobile ? (
                         <Sheet>
@@ -132,19 +145,47 @@ const Header = ({ isAuthenticated, user: propUser }) => {
                                             </div>
                                         </div>
                                     </div>
-                                    <Button variant="ghost" className="text-white hover:bg-green-700 transition-colors duration-300">Profile</Button>
-                                    <Button
-                                        variant="secondary"
-                                        className="bg-white text-green-600 hover:bg-green-100 transition-all duration-300 shadow-md flex items-center"
-                                        onClick={handleLogout}
-                                    >
-                                        <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-                                            <polyline points="16 17 21 12 16 7" />
-                                            <line x1="21" y1="12" x2="9" y2="12" />
-                                        </svg>
-                                        <span className="font-semibold">Logout</span>
-                                    </Button>
+                                    <NavigationMenu>
+                                        <NavigationMenuList>
+                                            <NavigationMenuItem>
+                                                <NavigationMenuTrigger className="bg-transparent hover:bg-transparent focus:bg-transparent">
+                                                    <Avatar className="w-10 h-10">
+                                                        <AvatarImage
+                                                            src={`https://api.dicebear.com/6.x/avataaars/svg?seed=${randomName}`}
+                                                            alt={user.email}
+                                                        />
+                                                        <AvatarFallback>{user.email.charAt(0).toUpperCase()}</AvatarFallback>
+                                                    </Avatar>
+                                                </NavigationMenuTrigger>
+                                                <NavigationMenuContent>
+                                                    <NavigationMenuLink asChild>
+                                                        <Link to="/redeem">
+                                                            <Button variant="ghost" className="w-full text-left">
+                                                                Redeem
+                                                            </Button>
+                                                        </Link>
+                                                    </NavigationMenuLink>
+                                                    <NavigationMenuLink asChild>
+                                                        <Link to="/profile">
+                                                            <Button variant="ghost" className="w-full text-left">
+                                                                Profile
+                                                            </Button>
+                                                        </Link>
+                                                    </NavigationMenuLink>
+                                                    <NavigationMenuLink asChild>
+                                                        <Button variant="ghost" className="w-full text-left" onClick={handleLogout}>
+                                                            <svg className="w-4 h-4 mr-2 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                                                                <polyline points="16 17 21 12 16 7" />
+                                                                <line x1="21" y1="12" x2="9" y2="12" />
+                                                            </svg>
+                                                            Logout
+                                                        </Button>
+                                                    </NavigationMenuLink>
+                                                </NavigationMenuContent>
+                                            </NavigationMenuItem>
+                                        </NavigationMenuList>
+                                    </NavigationMenu>
                                 </>
                             ) : (
                                 <>
@@ -162,7 +203,6 @@ const Header = ({ isAuthenticated, user: propUser }) => {
                                     >
                                         Sign Up
                                     </Button>
-
                                 </>
                             )}
                         </nav>

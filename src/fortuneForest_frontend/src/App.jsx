@@ -5,7 +5,8 @@ import { Toaster } from "@/components/ui/toaster";
 import LandingPage from './components/LandingPage';
 import Dashboard from './components/Dashboard';
 import Footer from './components/Footer';
-import SlotMachine from './components/pages/slotmachine';
+import SlotMachine from './components/pages/SlotMachine';
+import RedeemPage from './components/pages/RedeemPage';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -40,6 +41,9 @@ function App() {
             } />
             <Route path="/slotmachine" element={
               isAuthenticated ? <SlotMachine user={user} /> : <Navigate to="/" />
+            } />
+            <Route path="/redeem" element={
+              isAuthenticated ? <RedeemPage user={user} /> : <Navigate to="/" />
             } />
           </Routes>
         </div>
