@@ -41,3 +41,16 @@ Exclude the following folders on git repo:
 2. go to folder (ex. cd fortuneForest)
 3. dfx canister uninstall-code --all
 4. dfx stop
+
+###Tech Stack###
+
+* Internet Computer Protocol
+* ReactJS
+* TypeScript
+
+###Meet the Team###
+
+Project Manager: Vince Austria
+Backend Developer: Jefferson Regacho
+Frontend Developers: Gian Alcantara & Azer Sagucio
+Frontend Designer: Laurence Enarin
