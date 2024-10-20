@@ -42,13 +42,14 @@ Exclude the following folders on git repo:
 3. dfx canister uninstall-code --all
 4. dfx stop
 
-### Tech Stack ###
+<hr>
+<h1>Tech Stack</h1>
 
 * Internet Computer Protocol
 * ReactJS
 * TypeScript
 
-### Meet the Team ###
+<h1> Meet the Team </h1>
 
 Project Manager: Vince Austria
 Backend Developer: Jefferson Regacho
