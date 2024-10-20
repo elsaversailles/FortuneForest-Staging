@@ -56,16 +56,8 @@ shadcn
 magicui
 react-router
 emotion
-<p><img src="https://cdn.worldvectorlogo.com/logos/radix-ui.svg" width="50" height="60"> <img src="" width="50" height="60"></p>
+<p><img src="https://cdn.worldvectorlogo.com/logos/radix-ui.svg" width="50" height="60"> <img src="https://cva.style/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fwallpaper-hd.6da17633.jpg&w=1920&q=75" width="50" height="60"><img src="https://www.ejable.com/wp-content/uploads/2022/04/Framer-Motion.webp" width="50" height="60"></p>
 
-<div class="wrap">
-    <img src="https://cva.style/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fwallpaper-hd.6da17633.jpg&w=1920&q=75"
-</div>
-.wrap {
-    width: 50px;
-    height: 60px;
-    overflow: hidden;
-}
 
 <hr>
 <h1>Tech Stack</h1>
