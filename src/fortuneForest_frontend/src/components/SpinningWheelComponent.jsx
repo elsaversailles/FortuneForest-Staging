@@ -1,10 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import confetti from 'canvas-confetti';
+import { FaTimes } from 'react-icons/fa';
 
 const wheelContainer = css`
 * {
   box-sizing: border-box;
+  font-family: 'Lilita One', cursive;
 }
 
 html,
@@ -234,15 +237,15 @@ body {
 
 const SpinningWheelComponent = () => {
   const prizes = [
-    { text: "100 TREEPOINTS", color: "#c1fe75" },
-    { text: "50 TREEPOINTS", color: "#aafde3" },
-    { text: "BETTER LUCK NEXT TIME", color: "#fdc161" },
-    { text: "100 TREEPOINTS", color: "#c1fe75" },
-    { text: "50 TREEPOINTS", color: "#aafde3" },
-    { text: "BETTER LUCK NEXT TIME", color: "#fdc161" },
-    { text: "100 TREEPOINTS", color: "#c1fe75" },
-    { text: "50 TREEPOINTS", color: "#aafde3" },
-    { text: "BETTER LUCK NEXT TIME", color: "#fdc161" },
+    { text: "100 TREEPOINTS", color: "#c1fe75", icon: <img src="/tree-points-icon.png" alt="Tree" width="20" height="20" /> },
+    { text: "50 TREEPOINTS", color: "#aafde3", icon: <img src="/tree-points-icon.png" alt="Tree" width="20" height="20" /> },
+    { text: "BETTER LUCK NEXT TIME", color: "#fdc161", icon: <FaTimes color="red" size={20} /> },
+    { text: "100 TREEPOINTS", color: "#c1fe75", icon: <img src="/tree-points-icon.png" alt="Tree" width="20" height="20" /> },
+    { text: "50 TREEPOINTS", color: "#aafde3", icon: <img src="/tree-points-icon.png" alt="Tree" width="20" height="20" /> },
+    { text: "BETTER LUCK NEXT TIME", color: "#fdc161", icon: <FaTimes color="red" size={20} /> },
+    { text: "100 TREEPOINTS", color: "#c1fe75", icon: <img src="/tree-points-icon.png" alt="Tree" width="20" height="20" /> },
+    { text: "50 TREEPOINTS", color: "#aafde3", icon: <img src="/tree-points-icon.png" alt="Tree" width="20" height="20" /> },
+    { text: "BETTER LUCK NEXT TIME", color: "#fdc161", icon: <FaTimes color="red" size={20} /> },
   ];
 
   const wheelRef = useRef(null);
@@ -256,11 +259,11 @@ const SpinningWheelComponent = () => {
   const prizeOffset = Math.floor(180 / prizes.length);
 
   const createPrizeNodes = () => {
-    return prizes.map(({ text, color }, i) => {
+    return prizes.map(({ text, color, icon }, i) => {
       const rotation = ((prizeSlice * i) * -1) - prizeOffset;
       return (
         <li key={i} className="prize" style={{ '--rotate': `${rotation}deg` }}>
-          <span className="text">{text}</span>
+          <span className="text">{icon} {text}</span>
         </li>
       );
     });
@@ -276,19 +279,11 @@ const SpinningWheelComponent = () => {
   };
 
   const selectPrize = () => {
-    // Normalize rotation to ensure it's within 0-360 degrees
     const normalizedRotation = rotation % 360;
-  
-    // Adjust the angle for the ticker's position
-    // If the ticker points to the top of the wheel, add an offset to find the correct prize
-    const angleFromTicker = (normalizedRotation + 90) % 360; // Adjust based on your design
-  
-    const selected = Math.floor(angleFromTicker / prizeSlice) % prizes.length; // Calculate selected prize
-    
-    // Get the prize text
+    const angleFromTicker = (normalizedRotation + 90) % 360;
+    const selected = Math.floor(angleFromTicker / prizeSlice) % prizes.length;
     const prizeWon = prizes[selected].text;
-  
-    // Update the prize message based on the selected prize
+
     if (prizeWon.includes("100 TREEPOINTS")) {
       setPrizeMessage("Congratulations! You won 100 TREEPOINTS!");
     } else if (prizeWon.includes("50 TREEPOINTS")) {
@@ -296,17 +291,30 @@ const SpinningWheelComponent = () => {
     } else {
       setPrizeMessage("Better luck next time!");
     }
-  
-    // Highlight the selected prize
-    const prizeElements = spinnerRef.current.children; // Get prize elements
+
+    const prizeElements = spinnerRef.current.children;
     Array.from(prizeElements).forEach((prize, index) => {
-      prize.classList.remove('selected'); // Remove highlight from all prizes
+      prize.classList.remove('selected');
       if (index === selected) {
-        prize.classList.add('selected'); // Highlight the selected prize
+        prize.classList.add('selected');
+
+        confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { y: 0.6 }
+        });
+
+        // Add sound effect (uncomment and add your sound file)
+        // const audio = new Audio('/path/to/your/sound.mp3');
+        // audio.play();
+
+        if ('vibrate' in navigator) {
+          navigator.vibrate(200);
+        }
       }
     });
   };
-  
+
 
   const spinertia = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -317,7 +325,7 @@ const SpinningWheelComponent = () => {
     setIsSpinning(true);
     const newRotation = rotation + Math.floor(Math.random() * 360 + spinertia(2000, 5000));
     setRotation(newRotation);
-  
+
     setTimeout(() => {
       setIsSpinning(false);
       selectPrize();
@@ -331,15 +339,20 @@ const SpinningWheelComponent = () => {
   return (
     <div css={wheelContainer}>
       <div className={`deal-wheel ${isSpinning ? 'is-spinning' : ''}`} ref={wheelRef}>
-      <ul className="spinner" ref={spinnerRef} style={{ transform: `rotate(${rotation}deg)` }}>
-        {createPrizeNodes()}
-      </ul>
+        <ul className="spinner" ref={spinnerRef} style={{ transform: `rotate(${rotation}deg)` }}>
+          {createPrizeNodes()}
+        </ul>
         <figure className="cap">
           <img className="midIcon" src="image/wheelicon.png" alt="Wheel Icon" />
         </figure>
-        <div className="ticker" ref={tickerRef} ></div>
-        <div className="prize-message">{prizeMessage}</div>
-        <button className="btn-spin" onClick={handleSpin} disabled={isSpinning}>
+        <div className="ticker" ref={tickerRef}></div>
+        <div className="prize-message" style={{ fontFamily: "'Lilita One', cursive" }}>{prizeMessage}</div>
+        <button
+          className="btn-spin"
+          onClick={handleSpin}
+          disabled={isSpinning}
+          style={{ fontFamily: "'Lilita One', cursive" }}
+        >
           {isSpinning ? "Spinning..." : "Spin the Wheel"}
         </button>
       </div>

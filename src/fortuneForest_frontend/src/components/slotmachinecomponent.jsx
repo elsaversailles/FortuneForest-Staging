@@ -247,7 +247,7 @@ const SlotMachineComponent = () => {
   }, []);
 
   const checkBonus = () => {
-    let threshold = 0.001 * 0.001; // Modify based on multiplier
+    let threshold = 0.001 * 0.9; // Modify based on multiplier
     return Math.random() < threshold;
   };
 
