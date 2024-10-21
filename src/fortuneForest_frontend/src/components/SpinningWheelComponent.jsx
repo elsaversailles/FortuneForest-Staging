@@ -124,8 +124,7 @@ body {
   z-index: 1;
   -webkit-clip-path: polygon(20% 0, 100% 50%, 20% 100%, 0% 50%);
           clip-path: polygon(20% 0, 100% 50%, 20% 100%, 0% 50%);
-  transform-origin: center left;\
-  display: none;
+  transform-origin: center left;
 }
 
 .midIcon {
@@ -278,43 +277,67 @@ const SpinningWheelComponent = () => {
     }
   };
 
+
   const selectPrize = () => {
-    const normalizedRotation = rotation % 360;
-    const angleFromTicker = (normalizedRotation + 90) % 360;
-    const selected = Math.floor(angleFromTicker / prizeSlice) % prizes.length;
-    const prizeWon = prizes[selected].text;
+    const prizeElements = Array.from(spinnerRef.current.children);
+
+    let selectedPrize = null;
+    let minLeft = Infinity;
+
+    prizeElements.forEach((prizeElement) => {
+      const rect = prizeElement.getBoundingClientRect();
+
+      const prizeCenterX = rect.left + rect.width / 2;
+
+      if (prizeCenterX < minLeft) {
+        minLeft = prizeCenterX;
+        selectedPrize = prizeElement;
+      }
+    });
+
+    const prizeWon = selectedPrize?.querySelector('.text').textContent;
 
     if (prizeWon.includes("100 TREEPOINTS")) {
       setPrizeMessage("Congratulations! You won 100 TREEPOINTS!");
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+
+      // Add sound effect (uncomment and add your sound file)
+      // const audio = new Audio('/path/to/your/sound.mp3');
+      // audio.play();
+
+      if ('vibrate' in navigator) {
+        navigator.vibrate(200);
+      }
     } else if (prizeWon.includes("50 TREEPOINTS")) {
       setPrizeMessage("Congratulations! You won 50 TREEPOINTS!");
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+
+      // Add sound effect (uncomment and add your sound file)
+      // const audio = new Audio('/path/to/your/sound.mp3');
+      // audio.play();
+
+      if ('vibrate' in navigator) {
+        navigator.vibrate(200);
+      }
     } else {
       setPrizeMessage("Better luck next time!");
     }
 
-    const prizeElements = spinnerRef.current.children;
-    Array.from(prizeElements).forEach((prize, index) => {
+
+    prizeElements.forEach((prize) => {
       prize.classList.remove('selected');
-      if (index === selected) {
-        prize.classList.add('selected');
-
-        confetti({
-          particleCount: 100,
-          spread: 70,
-          origin: { y: 0.6 }
-        });
-
-        // Add sound effect (uncomment and add your sound file)
-        // const audio = new Audio('/path/to/your/sound.mp3');
-        // audio.play();
-
-        if ('vibrate' in navigator) {
-          navigator.vibrate(200);
-        }
-      }
     });
-  };
 
+    selectedPrize.classList.add('selected');
+  };
 
   const spinertia = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
