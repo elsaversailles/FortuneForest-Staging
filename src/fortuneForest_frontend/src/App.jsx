@@ -7,6 +7,7 @@ import Dashboard from './components/Dashboard';
 import Footer from './components/Footer';
 import SlotMachine from './components/pages/slotmachine';
 import RedeemPage from './components/pages/RedeemPage';
+import SpinningWheel from './components/pages/spinningwheel';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -45,6 +46,9 @@ function App() {
             <Route path="/redeem" element={
               isAuthenticated ? <RedeemPage user={user} /> : <Navigate to="/" />
             } />
+            {<Route path="/eco-wheel" element={
+              isAuthenticated ? <SpinningWheel user={user} /> : <Navigate to="/" />
+            } />}
           </Routes>
         </div>
         <Footer />
