@@ -1,7 +1,7 @@
 import React from 'react';
 import AuthenticatedLayout from '../layouts/AuthenticatedLayout';
 import MachineComponent from '../slotmachinecomponent';
-import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 const SlotMachine = ({ user }) => {
   return (
@@ -20,6 +20,8 @@ const SlotMachine = ({ user }) => {
                   <li>🌱 3x Seed: 25 Tree Points</li>
                   <li>🌿 3x Grass: 10 Tree Points</li>
                   <li>🎟️ 3x Voucher: Free Spin</li>
+                  <li>🔄 3x Double: Double Your Win</li>
+                  <li>💧 3x Spurt: Water Your Tree</li>
                 </ul>
               </CardContent>
             </Card>

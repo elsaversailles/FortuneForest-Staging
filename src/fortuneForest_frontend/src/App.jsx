@@ -5,7 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import LandingPage from './components/LandingPage';
 import Dashboard from './components/Dashboard';
 import Footer from './components/Footer';
-import SlotMachine from './components/pages/SlotMachine';
+import SlotMachine from './components/pages/slotmachine';
 import RedeemPage from './components/pages/RedeemPage';
 
 function App() {

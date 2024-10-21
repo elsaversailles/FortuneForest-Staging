@@ -216,6 +216,7 @@ const SlotMachineComponent = () => {
   const [winningChanceActive, setWinningChanceActive] = useState(false);
   const [heldRings, setHeldRings] = useState([false, false, false]);
   const ringsRef = useRef([]);
+  const [isSpinning, setIsSpinning] = useState(false);
 
   // Function to generate random values for initial spin
   const generateRandom = () => gsap.utils.random(-360, 360, 45);
@@ -286,45 +287,56 @@ const SlotMachineComponent = () => {
   }
 
   const handleSpin = () => {
-    setTextContent('Round and round it goes...');
+    const storedUser = JSON.parse(localStorage.getItem('user'));
+    if (storedUser && storedUser.life_coins >= 10) {
+      storedUser.life_coins -= 10;
+      localStorage.setItem('user', JSON.stringify(storedUser));
+      window.dispatchEvent(new Event('storage'));
 
-    // Clear active items before starting the spin
-    ringsRef.current.forEach(ring => {
-      ring.querySelectorAll('.item').forEach(item => item.classList.remove('active'));
-    });
+      setIsSpinning(true);
+      setTextContent('Round and round it goes...');
 
-    // Reset holds before spinning
-    setHeldRings([false, false, false]);
+      ringsRef.current.forEach(ring => {
+        ring.querySelectorAll('.item').forEach(item => item.classList.remove('active'));
+      });
 
-    setWinningChanceActive(checkBonus());
+      setHeldRings([false, false, false]);
 
-    let randomValues = [];
-    if (winningChanceActive) {
-      const baseValue = gsap.utils.random(-1440, 1440, 45);
-      randomValues = [baseValue, baseValue, baseValue];
-    } else {
-      randomValues = [
-        gsap.utils.random(-1440, 1440, 45),
-        gsap.utils.random(-1440, 1440, 45),
-        gsap.utils.random(-1440, 1440, 45),
-      ];
-    }
+      setWinningChanceActive(checkBonus());
 
-    const scrollTimeline = gsap.timeline({
-      onComplete: finishScroll // Finish the spin, then activate items
-    });
-
-    randomValues.forEach((value, index) => {
-      if (!heldRings[index]) {
-        scrollTimeline.to(`#ring${index + 1}`, {
-          rotationX: value,
-          duration: (index + 2), // Different durations for a realistic spin
-          ease: 'power3',
-        }, '<');
+      let randomValues = [];
+      if (winningChanceActive) {
+        const baseValue = gsap.utils.random(-1440, 1440, 45);
+        randomValues = [baseValue, baseValue, baseValue];
+      } else {
+        randomValues = [
+          gsap.utils.random(-1440, 1440, 45),
+          gsap.utils.random(-1440, 1440, 45),
+          gsap.utils.random(-1440, 1440, 45),
+        ];
       }
-    });
 
-    scrollTimeline.play();
+      const scrollTimeline = gsap.timeline({
+        onComplete: () => {
+          finishScroll();
+          setIsSpinning(false);
+        }
+      });
+
+      randomValues.forEach((value, index) => {
+        if (!heldRings[index]) {
+          scrollTimeline.to(`#ring${index + 1}`, {
+            rotationX: value,
+            duration: (index + 2),
+            ease: 'power3',
+          }, '<');
+        }
+      });
+
+      scrollTimeline.play();
+    } else {
+      setTextContent('Not enough Life Coins to play!');
+    }
   };
 
   return (
@@ -434,8 +446,12 @@ const SlotMachineComponent = () => {
 
         </div>
         <div className="button-area flex justify-center">
-          <button onClick={handleSpin} className="trigger bg-[#78C6B6] text-[#20223B] rounded-full text-2xl py-2 px-[55px] border-2 border-[#20223B] transition-all duration-200 hover:bg-white hover:text-[#16a085] hover:border-[#16a085] shadow-[0_4px_0_#20223B,0_4px_8px_rgba(0,0,0,0.2)] font-ubuntu font-medium">
-            Play!
+          <button
+            onClick={handleSpin}
+            disabled={isSpinning}
+            className={`trigger bg-[#78C6B6] text-[#20223B] rounded-full text-2xl py-2 px-[55px] border-2 border-[#20223B] transition-all duration-200 hover:bg-white hover:text-[#16a085] hover:border-[#16a085] shadow-[0_4px_0_#20223B,0_4px_8px_rgba(0,0,0,0.2)] font-ubuntu font-medium ${isSpinning ? 'opacity-50 cursor-not-allowed' : ''}`}
+          >
+            {isSpinning ? 'Spinning...' : 'Play!'}
           </button>
         </div>
       </div>
